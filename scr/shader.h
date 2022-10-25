@@ -3,7 +3,9 @@
 #include<glew.h>
 #include<stdio.h>
 #include<string>
+#include "CommonValues.h"
 #include "DirectionalLight.h"
+#include "PointLight.h"
 
 using namespace std;
 
@@ -30,6 +32,7 @@ class Shader
         void useShader();
         void clearShader();
         void setDirectionalLight(DirectionalLight* dLight);
+        void setPointLights(PointLight* pLight, unsigned int lightCount);
         ~Shader();
 
     private:
@@ -44,6 +47,19 @@ class Shader
             GLuint uDiffuseIntensity;
             GLuint uDirection;
         } uDirectionalLight;
+
+        GLuint uPointLightCount;
+        struct {
+            GLuint uColor;
+            GLuint uAmbientIntensity;
+            GLuint uDiffuseIntensity;
+
+            GLuint uPosition;
+            GLuint uConstant;
+            GLuint uLinear;
+            GLuint uExponent;
+        } uPointLight[MAX_POINT_LIGHTS];
+
 
         void compileShader(const char* vertexCode, const char* fragmentCode);
         void addShader(GLuint program, const char* shaderCode, GLenum shaderType);

@@ -12,12 +12,16 @@
 #include<GLM/gtc/matrix_transform.hpp>
 #include<GLM/gtc/type_ptr.hpp>
 
+#include "CommonValues.h"
+
+
 #include"Mesh.h"
 #include"shader.h"
 #include"Window.h"
 #include"Camera.h"
 #include"Texture.h"
 #include"DirectionalLight.h"
+#include"PointLight.h"
 #include"Material.h"
 
 //Vertex Shader
@@ -30,6 +34,7 @@ std::vector<Shader> shaderList;
 GLuint shader, uModel, uProjection;
 Camera camera;
 DirectionalLight mainLight;
+PointLight pointLights[MAX_POINT_LIGHTS];
 Material shinyMaterial, dullMaterial;
 
 GLfloat deltaTime = 0.0f;
@@ -126,6 +131,11 @@ int main()
     mainLight = DirectionalLight(1.0f, 1.0f, 1.0f, 
                                 0.2f, 0.3f,
                                 1.0f, 1.0f, 1.0f);
+    unsigned int pointLightCount = 1;
+    pointLights[0] = PointLight(1.0f, 1.0f, 0.0f, 
+                                0.1f, 1.0f,
+                                -4.0f, 2.0f, 0.0f, 
+                                0.3f, 0.2f, 0.1f);
 
     shinyMaterial = Material(1.0f, 32);
     dullMaterial = Material(0.2f, 4);
@@ -168,15 +178,12 @@ int main()
             uModel = shaderList[0].getModelLocation();
             uProjection = shaderList[0].getProjectionLocation();
             uView = shaderList[0].getViewLocation();
-            uAmbientColor = shaderList[0].getAmbientColorLocation();
-            uAmbientIntensity = shaderList[0].getAmbientIntensityLocation();
-            uDirection = shaderList[0].getDiffuseDirectionLocation();
-            uDiffuseIntensity = shaderList[0].getDiffuseIntensityLocation();
             uSpecularIntensity = shaderList[0].getSpecularIntensityLocation();
             uShininess = shaderList[0].getShininessLocation();
             uEyePos = shaderList[0].getDiffuseIntensityLocation();
             
             shaderList[0].setDirectionalLight(&mainLight);
+            shaderList[0].setPointLights(pointLights, pointLightCount);
         
             glm::mat4 model(1.0f);
 
