@@ -230,13 +230,12 @@ int main()
             meshList[1]->renderMesh(); 
 
             model = glm::mat4(1.0f);
-            model = glm::translate(model, glm::vec3(1.0f, 1.0f, -2.5f));
+            model = glm::translate(model, glm::vec3(0.0f, 5.0f, 0.0f));
             //model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
             //model = glm::rotate(model, curAngle*toRadians, glm::vec3(1.0f,0.0f,0.0f));
-
             glUniformMatrix4fv(uModel, 1, GL_FALSE, glm::value_ptr(model));
             dirtTexture.useTexture();
-            dullMaterial.useMaterial(uSpecularIntensity, uShininess);
+            shinyMaterial.useMaterial(uSpecularIntensity, uShininess);
             meshList[2]->renderMesh(); 
         glUseProgram(0);
         mainWindow.swapBuffer();
