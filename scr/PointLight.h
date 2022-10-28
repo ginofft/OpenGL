@@ -15,7 +15,7 @@ class PointLight:
                     GLuint dIntensityLocation, GLuint dDirectionLocation,
                     GLuint constLocation, GLuint linearLocation, GLuint expLocation);
         ~PointLight();
-    private:
+    protected:
         glm::vec3 position;
         GLfloat constant, linear, exponent;
 
